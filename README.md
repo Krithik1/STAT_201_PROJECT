@@ -1,3 +1,5 @@
 # STAT_201_PROJECT
 
-This is the repository for STAT 201 Group Project
+### CONTENTS
+
+- [Team Work Contract](team_work_contract.md)
