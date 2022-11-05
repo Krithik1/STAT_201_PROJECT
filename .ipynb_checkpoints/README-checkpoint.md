@@ -4,8 +4,8 @@
 
 - [Team Work Contract](team_work_contract.md)
 - [Project Proposal(ipynb file)](Project_Proposal.ipynb)
-- [Fairview Crime Data](crimedata_csv_Fairview_2022.csv)
-- [Kerrisdale Crime Data](crimedata_csv_Kerrisdale_2022.csv)
+- [2018 Crime Data](crimedata_csv_AllNeighbourhoods_2018.csv)
+- [2020 Crime Data](crimedata_csv_AllNeighbourhoods_2018.csv)
 
 ### MEMBERS
 
