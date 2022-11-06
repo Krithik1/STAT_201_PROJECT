@@ -3,9 +3,11 @@
 ### CONTENTS
 
 - [Team Work Contract](team_work_contract.md)
-- [Project Proposal(ipynb file)](Project_Proposal.ipynb)
-- [2018 Crime Data](data/crimedata_csv_AllNeighbourhoods_2018.csv)
-- [2020 Crime Data](data/crimedata_csv_AllNeighbourhoods_2018.csv)
+- Data
+  - [2018 Crime Data](data/crimedata_csv_AllNeighbourhoods_2018.csv)
+  - [2020 Crime Data](data/crimedata_csv_AllNeighbourhoods_2018.csv)
+- Project Proposal
+    - [Project Proposal(ipynb file)](Project_Proposal/Project_Proposal.ipynb)
 
 ### MEMBERS
 
