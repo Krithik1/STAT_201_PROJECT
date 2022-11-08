@@ -14615,7 +14615,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>A study co-authored by Simon Fraser University researchers found that theft-related crimes increased in wealthier neighbourhoods, such as Kitsilano, during the pandemic[1]. They suspect this is related to the decrease in theft around downtown and surrounding neighbourhoods, as businesses closed down and employees started working from home. We will determine whether the proportion of theft crimes in wealthier neighbourhoods increased during the pandemic compared to earlier years. Our response variables would be the proportion of theft crimes in Kitsilano between 2018 and 2020. The location parameter would be the difference in proportions between the two years, while the scale parameter would be the standard error of that difference.</p>
+<p>A study co-authored by Simon Fraser University researchers found that theft-related crimes increased in wealthier neighbourhoods, such as Kitsilano, during the pandemic (Andresen &amp; Hodgkinson, 2022). They suspect this is related to the decrease in theft around downtown and surrounding neighbourhoods, as businesses closed down and employees started working from home. We will explore whether the proportion of theft crimes in Kitsilano increased during the pandemic. Our response variables would be the proportion of theft crimes in Kitsilano in 2018 and 2020. The location parameter would be the difference in proportions between the two years, while the scale parameter would be the standard deviation of that difference.</p>
 
 </div>
 </div>
@@ -14627,7 +14627,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We will use crime data from the Vancouver Police Department: https://geodash.vpd.ca/opendata/. Within the website, we're able to select a specific year and neighbourhood(s) to view data from. We selected crime data from all neighbourhoods during 2018 and 2020. Each tuple lists the type of crime, the date (across several columns), and the location it occurred. Theft-related crimes are classified as either &quot;Theft of Vehicle&quot;, &quot;Theft of Bicycle&quot;, &quot;Theft from Vehicle&quot;, or &quot;Other Theft&quot; under the TYPE column. To find the proportions of theft crime in Kitsilano for a specific year, we will first filter for all theft-related crimes in our dataset. Then, we find the number of theft crimes in Kitsilano by filtering NEIGHBOURHOOD==&quot;Kitsilano&quot;, and divide that by the total number of theft crimes across all neighbourhoods that year.</p>
+<p>We will use crime data from the Vancouver Police Department: https://geodash.vpd.ca/opendata/. Within the website, we're able to select a specific year and neighbourhood(s) to view data from. We selected crime data from all neighbourhoods during 2018 and 2020. Each tuple lists the type of crime, the date (across several columns), and the location it occurred. Theft-related crimes are classified as either &quot;Theft of Vehicle&quot;, &quot;Theft of Bicycle&quot;, &quot;Theft from Vehicle&quot;, or &quot;Other Theft&quot; under the TYPE column. To find the proportions of theft crime in Kitsilano for a specific year, we'll first filter for all theft-related crimes in our dataset. Then, we find the number of theft crimes in Kitsilano by filtering NEIGHBOURHOOD==&quot;Kitsilano&quot;, and divide that by the total number of theft crimes across all neighbourhoods that year.</p>
 
 </div>
 </div>
@@ -14653,11 +14653,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#Importing the libraries</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">broom</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">repr</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">digest</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">infer</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">gridExtra</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">repr</span><span class="p">)</span>
+<span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">5</span><span class="p">,</span> <span class="n">repr.plot.height</span><span class="o">=</span><span class="m">5</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14685,15 +14683,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 ── <span class="ansi-bold">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──
 <span class="ansi-red-fg">✖</span> <span class="ansi-blue-fg">dplyr</span>::<span class="ansi-green-fg">filter()</span> masks <span class="ansi-blue-fg">stats</span>::filter()
 <span class="ansi-red-fg">✖</span> <span class="ansi-blue-fg">dplyr</span>::<span class="ansi-green-fg">lag()</span>    masks <span class="ansi-blue-fg">stats</span>::lag()
-
-Attaching package: ‘gridExtra’
-
-
-The following object is masked from ‘package:dplyr’:
-
-    combine
-
-
 </pre>
 </div>
 </div>
@@ -14933,7 +14922,9 @@ The following object is masked from ‘package:dplyr’:
 <span class="n">all_theft_2018</span> <span class="o">&lt;-</span> <span class="n">crimedata_all_2018</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">TYPE</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">"Theft of Vehicle"</span><span class="p">,</span> <span class="s">"Theft of Bicycle"</span><span class="p">,</span> <span class="s">"Theft from Vehicle"</span><span class="p">,</span> <span class="s">"Other Theft"</span><span class="p">))</span>
 <span class="n">all_theft_2020</span> <span class="o">&lt;-</span> <span class="n">crimedata_all_2020</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">TYPE</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">"Theft of Vehicle"</span><span class="p">,</span> <span class="s">"Theft of Bicycle"</span><span class="p">,</span> <span class="s">"Theft from Vehicle"</span><span class="p">,</span> <span class="s">"Other Theft"</span><span class="p">))</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">all_theft_2018</span><span class="p">)</span>
+<span class="nf">nrow</span><span class="p">(</span><span class="n">all_theft_2018</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">all_theft_2020</span><span class="p">)</span>
+<span class="nf">nrow</span><span class="p">(</span><span class="n">all_theft_2020</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14980,6 +14971,17 @@ The following object is masked from ‘package:dplyr’:
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+29561
+</div>
+
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
 <table class="dataframe">
 <caption>A tibble: 6 × 3</caption>
 <thead>
@@ -14996,6 +14998,17 @@ The following object is masked from ‘package:dplyr’:
 </tbody>
 </table>
 
+</div>
+
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+21915
 </div>
 
 </div>
@@ -15244,7 +15257,7 @@ The following object is masked from ‘package:dplyr’:
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Plotting the proportion of theft-related crimes in Kitsilano in both 2018 and 2020 using barplot (population)</span>
 
-<span class="nf">barplot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">),</span> <span class="n">main</span> <span class="o">=</span> <span class="s">"Proportion of theft crimes in Kitsilano in 2018 and 2020"</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"p1"</span><span class="p">,</span> <span class="s">"p2"</span><span class="p">))</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">),</span> <span class="n">main</span> <span class="o">=</span> <span class="s">"Proportion of theft crimes in Kitsilano in 2018\nand 2020"</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"p1"</span><span class="p">,</span> <span class="s">"p2"</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -15265,7 +15278,7 @@ The following object is masked from ‘package:dplyr’:
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15313,7 +15326,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15361,7 +15374,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n  \n  \n\n\n  \n  \n  \n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15381,9 +15394,9 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Taking samples of sample size 500 from both the datasets</span>
 
 <span class="nf">set.seed</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="c1">#Do not change</span>
-<span class="n">sample_size</span> <span class="o">=</span> <span class="m">500</span>
-<span class="n">all_theft_2018_sample</span> <span class="o">&lt;-</span> <span class="nf">rep_sample_n</span><span class="p">(</span><span class="n">all_theft_2018</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">sample_size</span><span class="p">)</span>
-<span class="n">all_theft_2020_sample</span> <span class="o">&lt;-</span> <span class="nf">rep_sample_n</span><span class="p">(</span><span class="n">all_theft_2020</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">sample_size</span><span class="p">)</span>
+<span class="n">sample_size_both</span> <span class="o">&lt;-</span> <span class="m">500</span>
+<span class="n">all_theft_2018_sample</span> <span class="o">&lt;-</span> <span class="nf">rep_sample_n</span><span class="p">(</span><span class="n">all_theft_2018</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">sample_size_both</span><span class="p">)</span>
+<span class="n">all_theft_2020_sample</span> <span class="o">&lt;-</span> <span class="nf">rep_sample_n</span><span class="p">(</span><span class="n">all_theft_2020</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">sample_size_both</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">all_theft_2018_sample</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">all_theft_2020_sample</span><span class="p">)</span>
 </pre></div>
@@ -15588,7 +15601,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Plotting the proportion of theft-related crimes in Kitsilano in samples for both 2018 and 2020 using barplot</span>
 
-<span class="nf">barplot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">p1_hat</span><span class="p">,</span> <span class="n">p2_hat</span><span class="p">),</span> <span class="n">main</span> <span class="o">=</span> <span class="s">"Proportion of theft crimes in Kitsilano in 2018 and 2020 (Sample)"</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"p1_hat"</span><span class="p">,</span> <span class="s">"p2_hat"</span><span class="p">))</span>
+<span class="nf">barplot</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">p1_hat</span><span class="p">,</span> <span class="n">p2_hat</span><span class="p">),</span> <span class="n">main</span> <span class="o">=</span> <span class="s">"Proportion of theft crimes in Kitsilano\nin 2018 and 2020 (Sample)"</span><span class="p">,</span> <span class="n">names.arg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"p1_hat"</span><span class="p">,</span> <span class="s">"p2_hat"</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -15609,7 +15622,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15658,7 +15671,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n  \n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n  \n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15707,7 +15720,7 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 
 
 <div class="jp-RenderedSVG jp-OutputArea-output " data-mime-type="image/svg+xml">
-b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n  \n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
+b'<svg width="360pt" height="360pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  \n  \n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n\n\n</svg>\n'
 </div>
 
 </div>
@@ -15734,11 +15747,12 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Our report is trustworthy because we've sampled from the population in a random, unbiased fashion (using rep_sample_n). Our samples are sufficiently large (500 each) so they're representative of the population.</p>
-<p>We've also set the seed, making our report reproducible. (We're pretending we don't have access to the entire population of crimes in Vancouver).</p>
-<p>We see an increase of 0.018 or 1.8% in our sample proportion from 2018 to 2020. However, this increase could result from sampling variability and may not indicate a real difference. Therefore, we want to verify whether this increase actually indicates an increase in theft between the two years; in other words, if the difference is statistically significant.</p>
-<p>We intend to explore this using hypothesis testing. Since we have 2 samples from two independent populations (2018 and 2020), we'll use 2 sample t-testing. We'll use a significance level of 10%, and construct a 90% confidence interval of the difference in proportions and check if it contains 0.</p>
-<p>We chose a significance level of 10% (rather than 5%) because we feel like a type 2 error would be worse than a type 1 error in our report.</p>
+<p>Our report is trustworthy because we've sampled from the population in a random, unbiased fashion (using rep_sample_n). Our samples are sufficiently large (500 each) so they're representative of the population. We've also set the seed, making our report reproducible.
+(Note: We'll pretend we don't have access to the entire population of crimes in Vancouver).</p>
+<p>We see an increase of 0.018 (1.8%) in our sample proportion from 2018 to 2020. However, this increase could result from sampling variability and may not indicate a real difference in population proportion. Therefore, we want to verify whether this increase is statistically significant.</p>
+<p>We intend to explore this using hypothesis testing. Since we have 2 samples from 2 independent populations (2018 and 2020), we'll use 2-sample z-testing (Krishnamoorthy &amp; Thomson, 2002). We'll also construct a 90% confidence interval of the difference in proportions and check if it contains 0.</p>
+<p>We'll use a significance level of 10% (rather than 5%) because we feel like a type 2 error would be worse than a type 1 error in our report.</p>
+<p>As described above, we intend to use asymptotics for our analysis. However, if we get time, we will also use the bootstrapping method to validate our results.</p>
 
 </div>
 </div>
@@ -15795,9 +15809,14 @@ b'<svg width="504pt" height="504pt">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>(1) Shaw, M. (2022, January 18). Covid-19 &amp; the impact on crime in Vancouver: SFU study. SFU News - Simon Fraser University. Retrieved November 4, 2022, from https://www.sfu.ca/sfunews/stories/2022/01/covid-19---the-impact-on-crime-in-vancouver--sfu-expert-availabl.html (1) https://www.sfu.ca/sfunews/stories/2022/01/covid-19---the-impact-on-crime-in-vancouver--sfu-expert-availabl.html</p>
-<p>(Study from 1) Andresen, M. A., &amp; Hodgkinson, T. (2022, January 9). In a world called catastrophe: The impact of covid-19 on neighbourhood level crime in Vancouver, Canada. Journal of experimental criminology. Retrieved November 4, 2022, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8742714/</p>
-<p>Data is from: VPD open data. (n.d.). Retrieved November 4, 2022, from https://geodash.vpd.ca/opendata/</p>
+<ul>
+<li><p>Krishnamoorthy, K., &amp; Thomson, J. (2002). Hypothesis testing about proportions in two finite populations. The American Statistician, 56(3), 215–222. https://doi.org/10.1198/000313002164</p>
+</li>
+<li><p>Andresen, M. A., &amp; Hodgkinson, T. (2022, January 9). In a world called catastrophe: The impact of covid-19 on neighbourhood level crime in Vancouver, Canada. Journal of experimental criminology. Retrieved November 4, 2022, from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8742714/</p>
+</li>
+<li><p>Data is from: VPD open data. (n.d.). Retrieved November 4, 2022, from https://geodash.vpd.ca/opendata/</p>
+</li>
+</ul>
 
 </div>
 </div>
